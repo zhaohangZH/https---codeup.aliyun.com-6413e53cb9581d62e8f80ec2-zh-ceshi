@@ -1,0 +1,388 @@
+{
+  "pages": [
+    {
+      "path": "views/welcome/index",
+      "style": {
+        "navigationBarTitleText": "北地大基金会",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "views/home/index",
+      "style": {
+        // "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "views/donate/index",
+      "style": {
+        "navigationBarTitleText": "捐赠",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "views/creative/index",
+      "style": {
+        "navigationBarTitleText": "公益文创"
+      }
+    },
+    {
+      "path": "views/my/index",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pages",
+      "pages": [
+        {
+          "path": "donate/index",
+          "style": {
+            "navigationBarTitleText": "公益捐赠"
+          }
+        },
+        {
+          "path": "repay-select/index",
+          "style": {
+            "navigationBarTitleText": "回馈选择"
+          }
+        },
+        {
+          "path": "repay-result/index",
+          "style": {
+            "navigationBarTitleText": "捐赠完成"
+          }
+        },
+        {
+          "path": "news-details/index",
+          "style": {
+            "navigationBarTitleText": "信息详情"
+          }
+        },
+        {
+          "path": "my-certificate/index",
+          "style": {
+            "navigationBarTitleText": "证书列表"
+          }
+        },
+        {
+          "path": "my-about/index",
+          "style": {
+            "navigationBarTitleText": "关于我们"
+          }
+        },
+        {
+          "path": "my-order/index",
+          "style": {
+            "navigationBarTitleText": "订单详情"
+          }
+        },
+        {
+          "path": "my-order-details/index",
+          "style": {
+            "navigationBarTitleText": "订单详情"
+          }
+        },
+        {
+          "path": "add-addres/add-addres",
+          "style": {
+            "navigationBarTitleText": "收货地址"
+          }
+        },
+        {
+          "path": "addres-del/index",
+          "style": {
+            "navigationBarTitleText": "删除收货地址"
+          }
+        },
+        {
+          "path": "my-address/index",
+          "style": {
+            "navigationBarTitleText": "收货地址"
+          }
+        },
+        {
+          "path": "my-help/index",
+          "style": {
+            "navigationBarTitleText": "帮助中心"
+          }
+        },
+        {
+          "path": "my-donate/index",
+          "style": {
+            "navigationBarTitleText": "我的捐款"
+          }
+        },
+        {
+          "path": "my-campaign/index",
+          "style": {
+            "navigationBarTitleText": "我的活动"
+          }
+        },
+        {
+          "path": "project-details/index",
+          "style": {
+            "navigationBarTitleText": "捐赠详情"
+          }
+        },
+        {
+          "path": "project-details-form/index",
+          "style": {
+            "navigationBarTitleText": "表单提交"
+          }
+        },
+        {
+          "path": "my-certification/index",
+          "style": {
+            "navigationBarTitleText": "实名认证"
+          }
+        },
+        {
+          "path": "my-certification-result/index",
+          "style": {
+            "navigationBarTitleText": "认证结果"
+          }
+        },
+        {
+          "path": "my-info/index",
+          "style": {
+            "navigationBarTitleText": "个人资料"
+          }
+        },
+        {
+          "path": "my-policy/index",
+          "style": {
+            "navigationBarTitleText": "隐私政策"
+          }
+        },
+        {
+          "path": "my-opinion/index",
+          "style": {
+            "navigationBarTitleText": "意见反馈"
+          }
+        },
+        {
+          "path": "my-opinion/result",
+          "style": {
+            "navigationBarTitleText": "意见反馈"
+          }
+        },
+        {
+          "path": "my-invoice/index",
+          "style": {
+            "navigationBarTitleText": "捐赠发票"
+          }
+        },
+        {
+          "path": "my-match/index",
+          "style": {
+            "navigationBarTitleText": "我的比赛"
+          }
+        },
+        {
+          "path": "column-from/my-match-from",
+          "style": {
+            "navigationBarTitleText": "上传我的比赛资料"
+          }
+        },
+        {
+          "path": "my-match/result",
+          "style": {
+            "navigationBarTitleText": "上传成功"
+          }
+        },
+        {
+          "path": "set-up/index",
+          "style": {
+            "navigationBarTitleText": "安全设置"
+          }
+        },
+        {
+          "path": "webview/index",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "wait-donation/index",
+          "style": {
+            "navigationBarTitleText": "等待捐赠"
+          }
+        },
+        {
+          "path": "project/index",
+          "style": {
+            "navigationBarTitleText": "捐赠项目"
+          }
+        },
+        {
+          "path": "creative/index",
+          "style": {
+            "navigationBarTitleText": "文创展示"
+          }
+        },
+        {
+          "path": "creative-details/index",
+          "style": {
+            "navigationBarTitleText": "文创详情"
+          }
+        },
+        {
+          "path": "campaign-details/index",
+          "style": {
+            "navigationBarTitleText": "活动详情"
+          }
+        },
+        {
+          "path": "campaign-form/index",
+          "style": {
+            "navigationBarTitleText": "添加信息"
+          }
+        },
+        {
+          "path": "campaign-result/index",
+          "style": {
+            "navigationBarTitleText": "活动报名"
+          }
+        },
+        {
+          "path": "campaign-result-list/index",
+          "style": {
+            "navigationBarTitleText": "报名结果",
+            "disableScroll": true
+          }
+        },
+        {
+          "path": "column/index",
+          "style": {
+            "navigationBarTitleText": "专栏"
+          }
+        },
+        {
+          "path": "column/photo",
+          "style": {
+            "navigationBarTitleText": "照片墙"
+          }
+        },
+        {
+          "path": "column-details/index",
+          "style": {
+            "navigationBarTitleText": "专栏详情"
+          }
+        },
+        {
+          "path": "column-from/index",
+          "style": {
+            "navigationBarTitleText": "提交表单"
+          }
+        },
+        {
+          "path": "column-result/index",
+          "style": {
+            "navigationBarTitleText": "报名成功"
+          }
+        },
+        {
+          "path": "column-vote/index",
+          "style": {
+            "navigationBarTitleText": "投票列表"
+          }
+        }
+      ]
+    },
+    {
+      "root": "async-pag-files",
+      "pages": []
+    },
+    {
+      "root": "async-gltf-files",
+      "pages": []
+    },
+    {
+      "root": "write-off",
+      "pages": [
+        {
+          "path": "verification/index",
+          "style": {
+            "navigationBarTitleText": "核销页"
+          }
+        },
+        {
+          "path": "verification-result/index",
+          "style": {
+            "navigationBarTitleText": "核销结果"
+          }
+        },
+        {
+          "path": "verification-record/index",
+          "style": {
+            "navigationBarTitleText": "核销记录"
+          }
+        },
+        {
+          "path": "verification-result/fail",
+          "style": {
+            "navigationBarTitleText": "核销失败"
+          }
+        }
+      ]
+    },
+    {
+      "root": "only-one-pages",
+      "pages": [
+        {
+          "path": "airdrop-list/index",
+          "style": {
+            "navigationBarTitleText": "空投榜单"
+          }
+        }
+      ]
+    }
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#999",
+    "selectedColor": "#333",
+    "backgroundColor": "#FFF",
+    "list": [
+      {
+        "pagePath": "views/home/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "views/donate/index",
+        "text": "捐赠"
+      },
+      {
+        "pagePath": "views/creative/index",
+        "text": "公益文创"
+      },
+      {
+        "pagePath": "views/my/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "北地大基金会",
+    "navigationBarBackgroundColor": "#F7F7F7",
+    "backgroundColor": "#F6F6F6",
+    "navigationStyle": "custom"
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+      "^bc-(.*)": "@/business/bc-$1/bc-$1.vue"
+    }
+  },
+  "componentPlaceholder": {
+    "async-gltf-player": "view",
+    "async-pag-player": "view"
+  },
+  "usingComponents": {}
+}

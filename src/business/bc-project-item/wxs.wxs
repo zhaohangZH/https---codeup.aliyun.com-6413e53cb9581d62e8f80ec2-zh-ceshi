@@ -1,0 +1,23 @@
+module.exports = {
+  scroll: function (e, ownerInstance) {
+    var instance = ownerInstance.selectComponent('.js-progress-bar')
+    if (!instance) return
+
+    var boxWidth = (e.instance.getBoundingClientRect() || {}).width || 0
+    if (!boxWidth) return
+
+    var detail = e.detail || {}
+    var scrollWidth = detail.scrollWidth
+    if (scrollWidth === boxWidth) return
+
+    var scrollLeft = detail.scrollLeft
+    var speed = Math.floor(scrollLeft) / Math.floor(scrollWidth - boxWidth)
+
+    /**
+     * 写死的常量200 是由 progress的固定宽度 和 progress-bar的固定宽度 得出来的
+     *  progress的固定宽度: 108
+     *  progress-bar的固定宽度: 36
+     **/
+    instance.setStyle({ transform: 'translateX(' + speed * 200 + '%)' })
+  }
+}

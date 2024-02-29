@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "Vue.volar",
+    "mrmaoddxxaa.create-uniapp-view",
+    "uni-helper.uni-app-schemas-vscode",
+    "mrmlnc.vscode-scss"
+  ]
+}

@@ -1,0 +1,233 @@
+function rgbaToArray(rgba) {
+  // 正则 \d+(\.\d+)? 直接写会在eslint报错且会被自动格式化掉
+  var p = decodeURIComponent('%5Cd+(%5C.%5Cd+)?')
+  // @ts-ignore
+  return rgba.match(getRegExp(p, 'g'))
+}
+function larp(start, end, s) {
+  // 开始颜色转数字
+  var sR = 1 * Math.round(start[0])
+  var sG = 1 * Math.round(start[1])
+  var sB = 1 * Math.round(start[2])
+  var sA = 1 * Math.round(10000 * start[3])
+
+  // 结束颜色转数字
+  var eR = 1 * Math.round(end[0])
+  var eG = 1 * Math.round(end[1])
+  var eB = 1 * Math.round(end[2])
+  var eA = 1 * Math.round(10000 * end[3])
+
+  // 转数字
+  var t = (1 * Math.round(10000 * s)) / 10000
+
+  // 计算插值
+  var r = Math.round(sR + t * (eR - sR))
+  var g = Math.round(sG + t * (eG - sG))
+  var b = Math.round(sB + t * (eB - sB))
+  var a = Math.round(sA + t * (eA - sA))
+
+  // 返回计算后的rgba
+  return 'rgba(' + [r, g, b, a / 10000].join(',') + ')'
+}
+function whiteAndBlackToRgba(v) {
+  return { white: 'rgba(255,255,255,1)', black: 'rgba(0,0,0,1)' }[v] || 'rgba(0,0,0,1)'
+}
+function initNavbar(ownerInstance) {
+  var _gState = ownerInstance.getState()
+  var logoArea = _gState.logoArea
+
+  // 获取需要控制的navbar组件根实例
+  var navbarInstanceRoot = ownerInstance.selectComponent('.jsNavbarInstanceRoot')
+  var logoAreaLength = logoArea.length
+  if (!logoAreaLength || !navbarInstanceRoot) return false
+
+  var navbarInstance = navbarInstanceRoot.selectComponent('.jsNavbarInstance')
+  if (!navbarInstance) return false
+
+  var navbarElement = navbarInstance.selectComponent('.jsSelector')
+  if (!navbarElement) return false
+
+  // 文字颜色
+  var customArrowRoot = ownerInstance.selectComponent('.jsCustomArrow')
+  var logoAreaLength = logoArea.length
+  if (!logoAreaLength || !customArrowRoot) return false
+
+  var customArrowElement = customArrowRoot.selectComponent('.jsSelector')
+  if (!customArrowElement) return false
+
+  var current = _gState.current || 0
+  if (!logoArea[current]) {
+    current = logoAreaLength - 1
+  }
+  if (current < 0) return false
+
+  // 文字颜色
+  var css = {
+    color: whiteAndBlackToRgba(logoArea[current].statusColor)
+  }
+  customArrowElement.setStyle(css)
+
+  _gState.customArrowElement = customArrowElement
+
+  // 背景颜色
+  navbarElement.setStyle({
+    'background-color': logoArea[current].logoBgColor || 'rgba(255,255,255,0)'
+  })
+  _gState.navbarElement = navbarElement
+  return true
+}
+function initLogo(ownerInstance) {
+  var _gState = ownerInstance.getState()
+  var logoArea = _gState.logoArea
+
+  // 获取需要控制的navbar组件根实例
+  var logoInstanceRoot = ownerInstance.selectComponent('.jsLogoInstanceRoot')
+  var logoAreaLength = logoArea.length
+  if (!logoAreaLength || !logoInstanceRoot) return false
+
+  var logoElement = logoInstanceRoot.selectComponent('.jsSelector')
+  if (!logoElement) return false
+
+  var current = _gState.current || 0
+  if (!logoArea[current]) {
+    current = logoAreaLength - 1
+  }
+  if (current < 0) return false
+
+  var logoColor = logoArea[current].logoColor || 'rgba(255,255,255,1)'
+  logoElement.setStyle({
+    '--logo-icon-color': logoColor,
+    '--logo-text-color': logoColor
+  })
+  _gState.logoElement = logoElement
+  return true
+}
+
+function scrollNavtext(ownerInstance, current, target, percentage) {
+  var _gState = ownerInstance.getState()
+  if (!_gState.isArrowLoaded) return false
+  var logoArea = _gState.logoArea
+  var customArrowElement = _gState.customArrowElement
+  var customArrowColor = larp(
+    rgbaToArray(whiteAndBlackToRgba(logoArea[current].statusColor)),
+    rgbaToArray(whiteAndBlackToRgba(logoArea[target].statusColor)),
+    percentage
+  )
+  var css = { color: customArrowColor }
+  var arrowRotate = _gState.arrowRotate
+  _gState.arrowRotate = arrowRotate
+  customArrowElement.setStyle(css)
+}
+function scrollNavbar(ownerInstance, current, target, percentage) {
+  var _gState = ownerInstance.getState()
+  if (!_gState.isNavbarLoaded) return false
+
+  var logoArea = _gState.logoArea
+  var navbarElement = _gState.navbarElement
+  var logoBgColor = larp(
+    rgbaToArray(logoArea[current].logoBgColor),
+    rgbaToArray(logoArea[target].logoBgColor),
+    percentage
+  )
+  navbarElement.setStyle({ 'background-color': logoBgColor })
+}
+function scrollLogo(ownerInstance, current, target, percentage) {
+  var _gState = ownerInstance.getState()
+  if (!_gState.isLogoLoaded) return false
+
+  var logoArea = _gState.logoArea
+  var logoElement = _gState.logoElement
+  var logoColor = larp(
+    rgbaToArray(logoArea[current].logoColor),
+    rgbaToArray(logoArea[target].logoColor),
+    percentage
+  )
+
+  logoElement.setStyle({
+    '--logo-icon-color': logoColor,
+    '--logo-text-color': logoColor
+  })
+}
+module.exports = {
+  wxsHandleInit: function (nv, ov, ownerInstance, instance) {
+    if (!nv || !nv.logoArea || !ownerInstance || !instance) return
+    var _gState = ownerInstance.getState()
+
+    // 初始化swiper索引
+    _gState.current = nv.swiperCurrent || 0
+    // 初始化swiper衔接数据
+    _gState.swiperCircular = nv.swiperCircular || false
+    // 翻页箭头的旋转角度初始化
+    _gState.arrowRotate = _gState.swiperCircular
+      ? 0
+      : 180 * ~~(_gState.current / (nv.logoArea.length - 1))
+
+    // navbar数据
+    _gState.logoArea = nv.logoArea || []
+    // navbar初始化
+    _gState.isNavbarLoaded = initNavbar(ownerInstance)
+    // logo初始化
+    _gState.isLogoLoaded = initLogo(ownerInstance)
+
+    // tabbar数据
+    _gState.tabbarArea = nv.tabbarArea || []
+    // tabbar初始化
+    _gState.boxWidth = 1 * parseInt(instance.getComputedStyle(['height']).height)
+  },
+  wxsChange: function (event, ownerInstance) {
+    var _gState = ownerInstance.getState()
+    if (!_gState.logoArea || _gState.logoArea.length < 2) return
+
+    var current = event.detail.current || 0
+    _gState.current = current
+
+    // 滚动时修改 Navbar
+    scrollNavtext(ownerInstance, current, current, 1)
+    scrollNavbar(ownerInstance, current, current, 1)
+    // 滚动时修改 logo
+    scrollLogo(ownerInstance, current, current, 1)
+
+    // 调用逻辑层的代码设置 手机状态栏 文字颜色
+    ownerInstance.callMethod('setStatusColor', { current })
+  },
+  wxsScroll: function (event, ownerInstance) {
+    if (!ownerInstance) return
+
+    var _gState = ownerInstance.getState()
+    if (!_gState.logoArea) return
+
+    var bannerListLength = _gState.logoArea.length
+    if (bannerListLength < 2) return
+
+    var boxWidth = _gState.boxWidth || 1
+    var scrollDetails = event.detail
+    var dx = scrollDetails.dx
+
+    var percentage = Math.abs(dx % boxWidth) / boxWidth
+    if (percentage === 0) return
+
+    var multiple = dx / boxWidth
+    var current = ~~multiple % bannerListLength
+    var target = (Math.ceil(Math.abs(multiple)) % bannerListLength) * (multiple > 0 ? 1 : -1)
+
+    current = (bannerListLength + _gState.current + current) % bannerListLength
+    target = (bannerListLength + _gState.current + target) % bannerListLength
+
+    // 滚动时修改 Navbar
+    scrollNavtext(ownerInstance, current, target, percentage)
+    scrollNavbar(ownerInstance, current, target, percentage)
+    // 滚动时修改 logo
+    scrollLogo(ownerInstance, current, target, percentage)
+  },
+  myChange: function (ownerInstance) {
+    var _gState = ownerInstance.getState()
+    var customArrowElement = _gState.customArrowElement
+    console.log(customArrowElement)
+    customArrowElement.setStyle({ color: 'rgba(255,255,255,1)' })
+    // 滚动时修改 Navbar
+    // scrollNavtext(ownerInstance, current, target, percentage)
+    // scrollNavbar(ownerInstance, current, target, percentage)
+    // // 滚动时修改 logo
+    // scrollLogo(ownerInstance, current, target, percentage)
+  }
+}

@@ -1,0 +1,114 @@
+variables:
+  GIT_CLEAN_FLAGS: -ffdx -e node_modules && -ffdx -e dist
+
+stages:
+  - install
+  - build
+  - deploy
+
+job_install:
+  stage: install
+  tags:
+    - npm-install
+  only:
+    refs:
+      - master
+      - uat
+      - dev
+  script:
+    - if [[ ! -d node_modules ]] || [[ -n `git diff --name-only HEAD~1 HEAD | grep "\package.json\b"` ]];
+      then  yarn;
+      else  echo "跳过install"; fi
+
+job_build-master:
+  stage: build
+  tags:
+    - node-build
+  only:
+    refs:
+      - master
+  script:
+    - yarn build:mp-weixin-prod
+  artifacts:
+    paths:
+      - dist/build/mp-weixin/
+
+job_build-uat:
+  stage: build
+  tags:
+    - node-build
+  only:
+    refs:
+      - uat
+  script:
+    - yarn build:mp-weixin-uat
+  artifacts:
+    paths:
+      - dist/build/mp-weixin/
+
+job_build-dev:
+  stage: build
+  tags:
+    - node-build
+  only:
+    refs:
+      - dev
+  script:
+    - yarn build:mp-weixin-dev
+  artifacts:
+    paths:
+      - dist/build/mp-weixin/
+
+job_deploy-master:
+  stage: deploy
+  tags:
+    - oss-deploy
+  only:
+    refs:
+      - master
+  dependencies: []
+  script:
+    - ls
+    - node .prod-ci.js
+  after_script:
+    - rm -rf node_modules/.cache
+    - rm -rf dist
+    - rm -rf *.lock
+    - rm -rf *-lock.yaml
+    - ls
+
+job_deploy-uat:
+  stage: deploy
+  tags:
+    - oss-deploy
+  only:
+    refs:
+      - uat
+  dependencies: []
+  script:
+    - ls
+    - node .uat-ci.js
+  after_script:
+    - rm -rf node_modules/.cache
+    - rm -rf dist
+    - rm -rf *.lock
+    - rm -rf *-lock.yaml
+    - ls
+
+job_deploy-dev:
+  stage: deploy
+  tags:
+    - oss-deploy
+  only:
+    refs:
+      - dev
+  dependencies: []
+  script:
+    - ls
+    - node .dev-ci.js
+  after_script:
+    - rm -rf node_modules/.cache
+    - rm -rf dist
+    - rm -rf *.lock
+    - rm -rf *-lock.yaml
+    - ls

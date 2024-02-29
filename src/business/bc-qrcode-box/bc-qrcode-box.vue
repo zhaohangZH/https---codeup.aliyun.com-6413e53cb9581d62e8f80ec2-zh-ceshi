@@ -1,0 +1,91 @@
+<template>
+  <uni-popup
+    ref="popup"
+    type="center"
+    :safe-area="false"
+    :is-mask-click="false"
+    mask-background-color="rgba(0,0,0,0.8)"
+    @mask-click="emits('close')"
+  >
+    <view class="qrcode-box">
+      <view class="qrcode-box-close" @click="emits('close')">
+        <tc-image width="20rpx" height="20rpx" src="!@/icons/i31.png" />
+      </view>
+      <tc-image
+        width="600rpx"
+        height="auto"
+        mode="widthFix"
+        :show-menu-by-longpress="true"
+        :src="rqUrl"
+      />
+    </view>
+  </uni-popup>
+</template>
+
+<script setup>
+import { ref, watch, onMounted, nextTick } from 'vue'
+import { generateQrcode } from '@/api/sys'
+const emits = defineEmits(['close'])
+const props = defineProps({
+  show: {
+    type: Boolean,
+    default: () => false
+  },
+  id: {
+    type: String,
+    default: () => ''
+  },
+  type: {
+    type: String,
+    default: () => ''
+  }
+})
+const popup = ref(null)
+const rqUrl = ref('')
+watch(
+  () => props.show,
+  (v) => popupEvent(v)
+)
+const popupEvent = async (show) => {
+  if (!popup.value) return
+  if (show) {
+    const { id } = props
+    const { type } = props
+    const [err, res] = await generateQrcode({ id, type })
+    if (!err) {
+      const { result } = res
+      rqUrl.value = result.qrCodeUrl
+      popup.value.open()
+    }
+  } else {
+    popup.value.close()
+  }
+}
+onMounted(() =>
+  nextTick(() => {
+    popupEvent(props.show)
+  })
+)
+</script>
+
+<style lang="scss" scoped>
+.qrcode-box {
+  display: flex;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  background-color: #fff;
+  position: relative;
+  &-close {
+    padding: 40rpx;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+}
+</style>
